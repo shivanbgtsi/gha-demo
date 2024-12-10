@@ -6,6 +6,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run tests
+      - name: Echo name
         run: |
-          echo "Running tests..."
+          echo "Welcome to github action demo"
