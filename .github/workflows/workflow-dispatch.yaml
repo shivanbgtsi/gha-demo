@@ -1,0 +1,20 @@
+name: Embase Non Prod AMI Rotation
+
+on:
+  workflow_dispatch:
+  #schedule:
+   # - cron: '0 18 * * 0'
+
+
+
+jobs:
+  work-flow-dispatch-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Print all branches
+        run: |
+          echo "Listing all branches:"
+          git fetch --all
+          git branch -r
