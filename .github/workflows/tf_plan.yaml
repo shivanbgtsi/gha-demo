@@ -1,0 +1,45 @@
+name: TF IAM
+
+on:
+  push:
+    paths:
+        - 'terraform/*'
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write # This is required for requesting the JWT for AWS role assumption
+  contents: read  # This is required for actions/checkout
+
+  
+env:
+  AWS_REGION: us-east-2
+  TERRAFORM_VERSION: "1.9.2"
+  TF_IN_AUTOMATION: true
+  PROJECT_PATH: terraform/iam
+  
+jobs:
+
+  terraform_plan:
+    # if: github.ref != 'refs/heads/main'
+    strategy:
+      max-parallel: 1
+      matrix:
+        myenvironment: ["dev","prod"]
+    runs-on: ubuntu-latest
+    environment: ${{ contains(matrix.myenvironment, 'prod') && 'prod' || 'nonprod' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: tf_plan
+        uses: ./.github/actions/tfplan
+        with:
+          terraform-version: ${{ env.TERRAFORM_VERSION }}
+          project-path: ${{ env.PROJECT_PATH }}
+          tfvarsfile: "temp"
+          backendconfigfile: "temp"
+          role-to-assume: "temp"
+          environment: "temp"
+    
+  
+          
