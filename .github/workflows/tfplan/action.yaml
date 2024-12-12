@@ -1,0 +1,57 @@
+name: 'tfplan'
+description: 'composite action'
+
+inputs:
+  terraform-version:
+    description: "Version of Terraform to use"
+    type: string
+    default: ">= 1.9.2"
+    required: false
+  project-path:
+    description: "(sub)Directory to run check on"
+    type: string
+    required: true
+  tfvarsfile:
+    description: "tfvars file"
+    type: string
+    required: true
+  role-to-assume:
+    description: "deployment role arn"
+    type: string
+    required: true
+  backendconfigfile:
+    description: "name of the backend configuration file"
+    type: string
+    required: true
+  environment:
+    description: "environment"
+    type: string
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Role name
+      run: echo "Name - ${{ inputs.role-to-assume }}"
+      shell: bash
+    - name: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+    - name: setup-terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+
+    - name: terraform init
+      working-directory: ${{ inputs.project-path }}
+      run: terraform init -upgrade -input=true -backend=true -backend-config ${{ inputs.backendconfigfile }}
+      shell: bash
+    - name: terraform validate
+      working-directory: ${{ inputs.project-path }}
+      run: terraform validate
+      shell: bash
+    - name: terraform plan
+      working-directory: ${{ inputs.project-path }}
+      run: terraform plan -var-file=${{ inputs.tfvarsfile }} -input=false -out=plan.tfplan
+      shell: bash
