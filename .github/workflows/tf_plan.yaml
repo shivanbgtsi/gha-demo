@@ -16,7 +16,7 @@ env:
   AWS_REGION: us-east-2
   TERRAFORM_VERSION: "1.9.2"
   TF_IN_AUTOMATION: true
-  PROJECT_PATH: terraform/iam
+  PROJECT_PATH: terraform
   
 jobs:
 
