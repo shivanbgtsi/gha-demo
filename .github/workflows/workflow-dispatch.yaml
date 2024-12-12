@@ -1,4 +1,4 @@
-name: Embase Non Prod AMI Rotation
+name: Workflow Dispatch Demo
 
 on:
   workflow_dispatch:
