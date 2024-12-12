@@ -46,12 +46,12 @@ runs:
     - name: terraform init
       working-directory: ${{ inputs.project-path }}
       run:  echo "terraform init" #terraform init -upgrade -input=true -backend=true -backend-config ${{ inputs.backendconfigfile }}
-      # shell: bash
+      shell: bash
     - name: terraform validate
       working-directory: ${{ inputs.project-path }}
       run: echo "terraform validate" #terraform validate
-      # shell: bash
+      shell: bash
     - name: terraform plan
       working-directory: ${{ inputs.project-path }}
       run: echo "terraform plan" #terraform plan -var-file=${{ inputs.tfvarsfile }} -input=false -out=plan.tfplan
-      # shell: bash
+      shell: bash
