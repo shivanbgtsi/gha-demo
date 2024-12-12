@@ -34,7 +34,7 @@ jobs:
       - name: Print env variable
         run: echo "${{ vars.ENV_VARIABLE }}"
       - name: Print secret
-        run: echo "${{ vars.ENV_SECRETE }}"
+        run: echo "${{ secrets.ENV_SECRETE }}"
       - name: tf_plan
         uses: ./.github/actions/tfplan
         with:
