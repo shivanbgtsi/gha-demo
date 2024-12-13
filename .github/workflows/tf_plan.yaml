@@ -21,7 +21,7 @@ env:
 jobs:
 
   terraform_plan:
-    # if: github.ref != 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     strategy:
       max-parallel: 1
       matrix:
@@ -31,6 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Print env variable
+        run: echo "${{ vars.ENV_VARIABLE }}"
+      - name: Print secret
+        run: echo "${{ secrets.ENV_SECRETE }}"
       - name: tf_plan
         uses: ./.github/actions/tfplan
         with:
