@@ -8,4 +8,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Echo name
         run: |
-          echo "Welcome to github action demo"
+          echo "Welcome to github action demo temp" 
